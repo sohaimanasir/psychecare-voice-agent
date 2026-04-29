@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PsycheCare Clinic — Karachi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal:    #0d7377;
+      --teal-lt: #14a085;
+      --cream:   #faf7f2;
+      --warm:    #f0ebe1;
+      --dark:    #1a2e2e;
+      --muted:   #5a7070;
+      --accent:  #e8c468;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(250,247,242,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(13,115,119,0.1);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--teal);
+      letter-spacing: -0.02em;
+    }
+    .logo span { color: var(--accent); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+    nav ul a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    nav ul a:hover { color: var(--teal); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 4rem 5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(13,115,119,0.08);
+      color: var(--teal);
+      border: 1px solid rgba(13,115,119,0.2);
+      border-radius: 100px;
+      padding: 0.35rem 1rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1.8rem;
+      width: fit-content;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--teal-lt);
+      animation: pulse 2s infinite;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      line-height: 1.1;
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--teal);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 440px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--teal);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      padding: 0.9rem 2rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 4px 20px rgba(13,115,119,0.3);
+    }
+    .btn-primary:hover {
+      background: var(--teal-lt);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(13,115,119,0.4);
+    }
+    .btn-primary svg { width: 18px; height: 18px; }
+
+    .btn-secondary {
+      color: var(--teal);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: gap 0.2s;
+    }
+    .btn-secondary:hover { gap: 0.7rem; }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(13,115,119,0.1);
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--teal);
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    /* ── HERO RIGHT ── */
+    .hero-right {
+      position: relative;
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(13,115,119,0.4) 0%, transparent 70%),
+                  radial-gradient(ellipse at 80% 20%, rgba(232,196,104,0.15) 0%, transparent 50%);
+    }
+
+    .hero-card {
+      position: relative;
+      z-index: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 2.5rem;
+      width: 320px;
+      backdrop-filter: blur(20px);
+      animation: fadeUp 1s 0.5s ease both;
+    }
+
+    .sara-avatar {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, var(--teal), var(--teal-lt));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+      position: relative;
+    }
+    .sara-avatar::after {
+      content: '';
+      position: absolute;
+      bottom: 2px; right: 2px;
+      width: 14px; height: 14px;
+      background: #2ecc71;
+      border-radius: 50%;
+      border: 2px solid var(--dark);
+    }
+
+    .sara-name {
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      font-size: 1.2rem;
+      margin-bottom: 0.3rem;
+    }
+    .sara-role {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .waveform {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 40px;
+      margin-bottom: 1.5rem;
+    }
+    .wave-bar {
+      width: 4px;
+      background: var(--teal-lt);
+      border-radius: 4px;
+      animation: wave 1.2s ease-in-out infinite;
+    }
+    .wave-bar:nth-child(1)  { animation-delay: 0s;    height: 20px; }
+    .wave-bar:nth-child(2)  { animation-delay: 0.1s;  height: 35px; }
+    .wave-bar:nth-child(3)  { animation-delay: 0.2s;  height: 25px; }
+    .wave-bar:nth-child(4)  { animation-delay: 0.3s;  height: 38px; }
+    .wave-bar:nth-child(5)  { animation-delay: 0.4s;  height: 20px; }
+    .wave-bar:nth-child(6)  { animation-delay: 0.5s;  height: 30px; }
+    .wave-bar:nth-child(7)  { animation-delay: 0.6s;  height: 15px; }
+    .wave-bar:nth-child(8)  { animation-delay: 0.7s;  height: 28px; }
+    .wave-bar:nth-child(9)  { animation-delay: 0.8s;  height: 22px; }
+    .wave-bar:nth-child(10) { animation-delay: 0.9s;  height: 36px; }
+
+    .call-btn {
+      width: 100%;
+      background: var(--teal);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 0.85rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.25s;
+    }
+    .call-btn:hover { background: var(--teal-lt); transform: translateY(-1px); }
+
+    .transcript {
+      margin-top: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .msg {
+      padding: 0.6rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      line-height: 1.4;
+      max-width: 85%;
+    }
+    .msg.sara {
+      background: rgba(13,115,119,0.3);
+      color: rgba(255,255,255,0.9);
+      align-self: flex-start;
+    }
+    .msg.patient {
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.7);
+      align-self: flex-end;
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 6rem 5rem; position: relative; z-index: 1; }
+
+    .section-tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      color: var(--dark);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 520px;
+      font-weight: 300;
+    }
+
+    /* ── DOCTORS ── */
+    #doctors { background: var(--warm); }
+
+    .doctors-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+    }
+
+    .doctors-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .doctor-card {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      border: 1px solid rgba(13,115,119,0.08);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .doctor-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal), var(--teal-lt));
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+    .doctor-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(13,115,119,0.12); }
+    .doctor-card:hover::before { transform: scaleX(1); }
+
+    .doc-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(13,115,119,0.1), rgba(13,115,119,0.2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 1rem;
+    }
+    .doc-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--dark);
+      margin-bottom: 0.4rem;
+    }
+    .doc-days {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .doc-badge {
+      display: inline-block;
+      margin-top: 0.8rem;
+      background: rgba(13,115,119,0.08);
+      color: var(--teal);
+      border-radius: 100px;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+    }
+
+    /* ── HOW IT WORKS ── */
+    #how { background: var(--cream); }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .step {
+      position: relative;
+    }
+    .step:not(:last-child)::after {
+      content: '→';
+      position: absolute;
+      top: 1.2rem;
+      right: -1rem;
+      color: rgba(13,115,119,0.3);
+      font-size: 1.2rem;
+    }
+    .step-num {
+      width: 48px; height: 48px;
+      background: var(--teal);
+      color: #fff;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+    .step-title {
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: 0.4rem;
+      font-size: 0.95rem;
+    }
+    .step-desc {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── CALL SECTION ── */
+    #call {
+      background: var(--dark);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #call::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(13,115,119,0.4) 0%, transparent 60%);
+    }
+    #call .section-tag { color: var(--accent); }
+    #call .section-title { color: #fff; }
+    #call .section-sub { color: rgba(255,255,255,0.5); margin: 0 auto 2.5rem; }
+
+    .call-widget-wrap {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    #retell-call-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: linear-gradient(135deg, var(--teal), var(--teal-lt));
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      padding: 1.1rem 2.5rem;
+      font-size: 1.05rem;
+      font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 32px rgba(13,115,119,0.4);
+      position: relative;
+    }
+    #retell-call-btn::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 100px;
+      background: linear-gradient(135deg, var(--teal), var(--accent));
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    #retell-call-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(13,115,119,0.5); }
+    #retell-call-btn:hover::before { opacity: 1; }
+
+    #retell-call-btn.active {
+      background: #e74c3c;
+      box-shadow: 0 8px 32px rgba(231,76,60,0.4);
+    }
+
+    .call-note {
+      color: rgba(255,255,255,0.3);
+      font-size: 0.8rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #111d1d;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.82rem;
+    }
+    footer span { color: var(--teal-lt); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes wave {
+      0%, 100% { transform: scaleY(0.5); opacity: 0.6; }
+      50%       { transform: scaleY(1);   opacity: 1; }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50%       { transform: scale(1.4); opacity: 0.7; }
+    }
+
+    /* ── RETELL WIDGET OVERLAY ── */
+    #call-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,20,20,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+    #call-overlay.show { display: flex; }
+
+    .call-modal {
+      background: var(--dark);
+      border: 1px solid rgba(13,115,119,0.3);
+      border-radius: 28px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      width: 360px;
+      position: relative;
+    }
+    .call-modal-avatar {
+      width: 80px; height: 80px;
+      background: linear-gradient(135deg, var(--teal), var(--teal-lt));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      margin: 0 auto 1.2rem;
+      position: relative;
+    }
+    .call-modal-avatar::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid rgba(13,115,119,0.4);
+      animation: ringPulse 2s infinite;
+    }
+    @keyframes ringPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50%       { transform: scale(1.1); opacity: 0.5; }
+    }
+    .call-modal h3 {
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      font-size: 1.4rem;
+      margin-bottom: 0.4rem;
+    }
+    .call-modal p {
+      color: rgba(255,255,255,0.4);
+      font-size: 0.85rem;
+      margin-bottom: 2rem;
+    }
+    .modal-waveform {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      height: 48px;
+      margin-bottom: 2rem;
+    }
+    .modal-wave-bar {
+      width: 5px;
+      background: var(--teal-lt);
+      border-radius: 4px;
+      animation: wave 1.2s ease-in-out infinite;
+    }
+    .modal-wave-bar:nth-child(1)  { animation-delay: 0s;    height: 16px; }
+    .modal-wave-bar:nth-child(2)  { animation-delay: 0.15s; height: 30px; }
+    .modal-wave-bar:nth-child(3)  { animation-delay: 0.3s;  height: 20px; }
+    .modal-wave-bar:nth-child(4)  { animation-delay: 0.45s; height: 40px; }
+    .modal-wave-bar:nth-child(5)  { animation-delay: 0.6s;  height: 24px; }
+    .modal-wave-bar:nth-child(6)  { animation-delay: 0.75s; height: 36px; }
+    .modal-wave-bar:nth-child(7)  { animation-delay: 0.9s;  height: 18px; }
+
+    .end-call-btn {
+      background: rgba(231,76,60,0.15);
+      color: #e74c3c;
+      border: 1px solid rgba(231,76,60,0.3);
+      border-radius: 100px;
+      padding: 0.75rem 2rem;
+      font-size: 0.9rem;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .end-call-btn:hover { background: rgba(231,76,60,0.25); }
+
+    /* ── CONFIRMATION SCREEN ── */
+    #confirmation-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,20,20,0.9);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    #confirmation-overlay.show { display: flex; }
+
+    .confirm-modal {
+      background: var(--dark);
+      border: 1px solid rgba(46,204,113,0.3);
+      border-radius: 28px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      width: 400px;
+      position: relative;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .confirm-icon {
+      width: 90px; height: 90px;
+      background: rgba(46,204,113,0.15);
+      border: 2px solid rgba(46,204,113,0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin: 0 auto 1.5rem;
+      animation: popIn 0.6s 0.2s ease both;
+    }
+
+    @keyframes popIn {
+      0%   { transform: scale(0); opacity: 0; }
+      70%  { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .confirm-modal h3 {
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      font-size: 1.6rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .confirm-modal .confirm-sub {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .confirm-details {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 1.2rem 1.5rem;
+      text-align: left;
+      margin-bottom: 1.8rem;
+    }
+
+    .confirm-details .detail-row {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.7);
+    }
+    .confirm-details .detail-row:last-child { border-bottom: none; }
+    .confirm-details .detail-row span:first-child {
+      font-size: 1rem;
+      width: 24px;
+    }
+
+    .confirm-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn-new-booking {
+      flex: 1;
+      background: var(--teal);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      padding: 0.8rem;
+      font-size: 0.88rem;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    .btn-new-booking:hover { background: var(--teal-lt); }
+
+    .btn-close-confirm {
+      flex: 1;
+      background: transparent;
+      color: rgba(255,255,255,0.4);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      padding: 0.8rem;
+      font-size: 0.88rem;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-close-confirm:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+
+    .confirm-note {
+      margin-top: 1.2rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 7rem 2rem 4rem; }
+      section { padding: 4rem 2rem; }
+      .doctors-grid { grid-template-columns: 1fr 1fr; }
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+      nav { padding: 1rem 1.5rem; }
+      nav ul { gap: 1rem; }
+      .doctors-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">Psyche<span>Care</span></div>
+    <ul>
+      <li><a href="#doctors">Doctors</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#call">Book Now</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-left">
+      <div class="hero-tag">🧠 Karachi's AI-Powered Psychiatry Clinic</div>
+      <h1>Your mind<br/>deserves <em>care</em><br/>& comfort.</h1>
+      <p class="hero-sub">PsycheCare Clinic offers compassionate psychiatric care in Karachi. Book your appointment instantly — our AI assistant Sara is available anytime.</p>
+      <div class="cta-group">
+        <button class="btn-primary" onclick="document.getElementById('call').scrollIntoView({behavior:'smooth'})">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+          </svg>
+          Book via AI Call
+        </button>
+        <a href="#doctors" class="btn-secondary">Meet our doctors →</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">4</div>
+          <div class="stat-label">Expert Psychiatrists</div>
+        </div>
+        <div>
+          <div class="stat-num">6</div>
+          <div class="stat-label">Days a Week</div>
+        </div>
+        <div>
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">AI Booking</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-card">
+        <div class="sara-avatar">🤖</div>
+        <div class="sara-name">Sara</div>
+        <div class="sara-role">AI Booking Assistant · Online now</div>
+        <div class="waveform">
+          <div class="wave-bar"></div><div class="wave-bar"></div>
+          <div class="wave-bar"></div><div class="wave-bar"></div>
+          <div class="wave-bar"></div><div class="wave-bar"></div>
+          <div class="wave-bar"></div><div class="wave-bar"></div>
+          <div class="wave-bar"></div><div class="wave-bar"></div>
+        </div>
+        <div class="transcript">
+          <div class="msg sara">"Hello! Thank you for calling PsycheCare. This is Sara!"</div>
+          <div class="msg patient">"I'd like to see Dr. Maliha"</div>
+          <div class="msg sara">"Dr. Maliha is available Thu, Fri & Sat. Which day works?"</div>
+        </div>
+        <button class="call-btn" style="margin-top:1.2rem" onclick="startCall()">
+          📞 &nbsp;Talk to Sara Now
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOCTORS -->
+  <section id="doctors">
+    <div class="doctors-header">
+      <div>
+        <div class="section-tag">Our Team</div>
+        <div class="section-title">Meet our<br/><em style="font-family:'Playfair Display',serif;font-style:italic;color:var(--teal)">psychiatrists</em></div>
+      </div>
+      <p class="section-sub">Our experienced team of psychiatrists is here to support your mental wellness journey with compassion and expertise.</p>
+    </div>
+    <div class="doctors-grid">
+      <div class="doctor-card">
+        <div class="doc-avatar">👩‍⚕️</div>
+        <div class="doc-name">Dr. Umaima</div>
+        <div class="doc-days">Monday · Wednesday · Friday</div>
+        <div class="doc-badge">Psychiatrist</div>
+      </div>
+      <div class="doctor-card">
+        <div class="doc-avatar">👨‍⚕️</div>
+        <div class="doc-name">Dr. Farooq</div>
+        <div class="doc-days">Tuesday · Thursday · Saturday</div>
+        <div class="doc-badge">Psychiatrist</div>
+      </div>
+      <div class="doctor-card">
+        <div class="doc-avatar">👨‍⚕️</div>
+        <div class="doc-name">Dr. Azam</div>
+        <div class="doc-days">Monday · Tuesday · Wednesday</div>
+        <div class="doc-badge">Psychiatrist</div>
+      </div>
+      <div class="doctor-card">
+        <div class="doc-avatar">👩‍⚕️</div>
+        <div class="doc-name">Dr. Maliha</div>
+        <div class="doc-days">Thursday · Friday · Saturday</div>
+        <div class="doc-badge">Psychiatrist</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div style="text-align:center;margin-bottom:1rem">
+      <div class="section-tag">Simple Process</div>
+      <div class="section-title">How Sara books<br/>your appointment</div>
+    </div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">You Call Sara</div>
+        <div class="step-desc">Click the button and Sara answers instantly. No waiting, no hold music.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Choose Your Doctor</div>
+        <div class="step-desc">Sara tells you which doctors are available and helps you pick.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Pick Date & Time</div>
+        <div class="step-desc">Choose a date and time between 10AM–7PM, Mon–Sat.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">Booking Confirmed</div>
+        <div class="step-desc">Sara confirms all your details and your appointment is booked!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALL SECTION -->
+  <section id="call">
+    <div style="position:relative;z-index:1">
+      <div class="section-tag">Talk to Sara</div>
+      <div class="section-title" style="color:#fff;margin:0 auto 1rem">Ready to book your<br/><em style="font-style:italic">appointment?</em></div>
+      <p class="section-sub">Click below and Sara will answer immediately. She speaks English and Urdu. Available Mon–Sat, 10AM–7PM.</p>
+      <div class="call-widget-wrap">
+        <button id="retell-call-btn" onclick="startCall()">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+          </svg>
+          Call Sara Now — Book Appointment
+        </button>
+        <div class="call-note">🔒 Your privacy is protected · AI-powered · Free to call</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 <span>PsycheCare Clinic</span> · Karachi, Pakistan · Built with ❤️ and Retell AI</p>
+  </footer>
+
+  <!-- CALL MODAL -->
+  <div id="call-overlay">
+    <div class="call-modal">
+      <div class="call-modal-avatar">🤖</div>
+      <h3>Connecting to Sara...</h3>
+      <p>PsycheCare Clinic · AI Booking Assistant</p>
+      <div class="modal-waveform" id="modal-wave">
+        <div class="modal-wave-bar"></div>
+        <div class="modal-wave-bar"></div>
+        <div class="modal-wave-bar"></div>
+        <div class="modal-wave-bar"></div>
+        <div class="modal-wave-bar"></div>
+        <div class="modal-wave-bar"></div>
+        <div class="modal-wave-bar"></div>
+      </div>
+      <button class="end-call-btn" onclick="endCall()">End Call</button>
+    </div>
+  </div>
+
+  <!-- CONFIRMATION MODAL -->
+  <div id="confirmation-overlay" style="display:none;position:fixed;inset:0;background:rgba(10,20,20,0.9);backdrop-filter:blur(12px);z-index:1000;align-items:center;justify-content:center;">
+    <div style="background:#1a2e2e;border:1px solid rgba(46,204,113,0.3);border-radius:28px;padding:3rem 2.5rem;text-align:center;width:400px;animation:fadeUp 0.5s ease both;">
+      <div style="width:90px;height:90px;background:rgba(46,204,113,0.15);border:2px solid rgba(46,204,113,0.4);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:0 auto 1.5rem;">✅</div>
+      <h3 style="font-family:'Playfair Display',serif;color:#fff;font-size:1.6rem;margin-bottom:0.6rem;">Appointment Requested!</h3>
+      <p style="color:rgba(255,255,255,0.5);font-size:0.9rem;line-height:1.6;margin-bottom:2rem;">Thank you for calling PsycheCare Clinic.<br/>Your appointment has been received by Sara.</p>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:1.2rem 1.5rem;text-align:left;margin-bottom:1.8rem;">
+        <div style="display:flex;align-items:center;gap:0.8rem;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.85rem;color:rgba(255,255,255,0.7);">
+          <span>🏥</span><span>PsycheCare Clinic, Karachi</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.8rem;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.85rem;color:rgba(255,255,255,0.7);">
+          <span>📅</span><span>Mon – Sat &nbsp;·&nbsp; 10:00 AM – 7:00 PM</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.8rem;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.85rem;color:rgba(255,255,255,0.7);">
+          <span>📞</span><span>Our team will call to confirm your slot</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.8rem;padding:0.5rem 0;font-size:0.85rem;color:rgba(255,255,255,0.7);">
+          <span>💙</span><span>Be calm — you're in good hands</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:1rem;">
+        <button onclick="newBooking()" style="flex:1;background:#0d7377;color:#fff;border:none;border-radius:100px;padding:0.8rem;font-size:0.88rem;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;">📞 Book Another</button>
+        <button onclick="closeConfirmation()" style="flex:1;background:transparent;color:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:0.8rem;font-size:0.88rem;font-family:'DM Sans',sans-serif;cursor:pointer;">Close</button>
+      </div>
+      <div style="margin-top:1.2rem;font-size:0.75rem;color:rgba(255,255,255,0.25);">ⓘ PsycheCare team will confirm your appointment via phone</div>
+    </div>
+  </div>
+
+  <!-- RETELL AI SDK -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.0/axios.min.js"></script>
+  <script>
+    const AGENT_ID = "agent_d3d586dda6a743082c11631074";
+    let retellClient = null;
+    let isCallActive = false;
+
+    async function startCall() {
+      if (isCallActive) { endCall(); return; }
+
+      // Show modal
+      document.getElementById('call-overlay').classList.add('show');
+      document.getElementById('retell-call-btn').classList.add('active');
+      document.getElementById('retell-call-btn').innerHTML = `
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+          <rect x="6" y="6" width="12" height="12" rx="2"/>
+        </svg>
+        End Call
+      `;
+      isCallActive = true;
+
+      try {
+        // Load Retell SDK dynamically
+        if (!window.RetellWebClient) {
+          await loadScript("https://cdn.jsdelivr.net/npm/retell-client-js-sdk/dist/index.umd.js");
+          // wait a tick for global to register
+          await new Promise(r => setTimeout(r, 300));
+        }
+
+        // Try different global names the SDK might use
+        const ClientClass = window.RetellWebClient 
+          || (window.RetellClientJsSdk && window.RetellClientJsSdk.RetellWebClient)
+          || (window.retellClientJsSdk && window.retellClientJsSdk.RetellWebClient);
+
+        if (!ClientClass) throw new Error("Retell SDK not loaded");
+
+        retellClient = new ClientClass();
+
+        // Get web call access token from Retell
+        const response = await fetch("https://api.retellai.com/v2/create-web-call", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ agent_id: AGENT_ID })
+        });
+
+        if (!response.ok) throw new Error("Could not connect to Retell API");
+        const data = await response.json();
+
+        await retellClient.startCall({ accessToken: data.access_token });
+
+        retellClient.on("call_ended", () => endCall());
+        retellClient.on("error", () => endCall());
+
+        // Update modal
+        document.querySelector('.call-modal h3').textContent = "Connected to Sara 🎙️";
+        document.querySelector('.call-modal p').textContent = "Speak now — Sara is listening...";
+
+      } catch (err) {
+        console.error("Retell error:", err);
+        document.querySelector('.call-modal h3').textContent = "⚠️ Could not connect";
+        document.querySelector('.call-modal p').textContent = "Please allow microphone access and try again.";
+        setTimeout(() => endCall(false), 3000);
+      }
+    }
+
+    function endCall(showConfirm = true) {
+      if (retellClient) {
+        try { retellClient.stopCall(); } catch(e) {}
+        retellClient = null;
+      }
+      isCallActive = false;
+      document.getElementById('call-overlay').classList.remove('show');
+      document.getElementById('retell-call-btn').classList.remove('active');
+      document.getElementById('retell-call-btn').innerHTML = `
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+        </svg>
+        Call Sara Now — Book Appointment
+      `;
+      if (showConfirm) {
+        setTimeout(() => {
+          document.getElementById('confirmation-overlay').classList.add('show');
+        }, 400);
+      }
+    }
+
+    function closeConfirmation() {
+      document.getElementById('confirmation-overlay').classList.remove('show');
+    }
+
+    function newBooking() {
+      closeConfirmation();
+      setTimeout(() => startCall(), 300);
+    }
+
+    function loadScript(src) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+
+    // Close overlays on background click
+    document.getElementById('call-overlay').addEventListener('click', function(e) {
+      if (e.target === this) endCall();
+    });
+    document.getElementById('confirmation-overlay').addEventListener('click', function(e) {
+      if (e.target === this) closeConfirmation();
+    });
+  </script>
+
+</body>
+</html>
