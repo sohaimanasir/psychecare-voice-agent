@@ -1,0 +1,111 @@
+{
+  "agent_id": "",
+  "channel": "voice",
+  "last_modification_timestamp": 1777450279197,
+  "agent_name": "Doctor-Appointment-booking",
+  "version_description": "Updated Sara prompt - shorter tokens, \nbegin message added, all 4 doctors configured",
+  "response_engine": {
+    "type": "retell-llm",
+    "llm_id": "llm_b9a80214514bd20eaed2e6970bfe",
+    "version": 1
+  },
+  "language": "en-US",
+  "data_storage_setting": "everything",
+  "opt_in_signed_url": false,
+  "version": 1,
+  "is_published": true,
+  "version_title": "PsycheCare V2",
+  "post_call_analysis_model": "gpt-4.1",
+  "pii_config": {
+    "mode": "post_call",
+    "categories": []
+  },
+  "handbook_config": {
+    "echo_verification": false,
+    "speech_normalization": false,
+    "default_personality": true,
+    "scope_boundaries": false,
+    "natural_filler_words": false,
+    "nato_phonetic_alphabet": false,
+    "high_empathy": false,
+    "ai_disclosure": true,
+    "smart_matching": false
+  },
+  "analysis_successful_prompt": "Evaluate whether the agent had a successful call with the user. For a successful call, the agent should have a complete conversation with user, finished the task, and have not ran into technical issues, or caused user frustration. Besides, the agent was not blocked by a call screen or encountered voicemail.",
+  "analysis_summary_prompt": "Write a 1-3 sentence summary of the call based on the call transcript. Should capture the important information and actions taken during the call.",
+  "analysis_user_sentiment_prompt": "Evaluate user's sentiment, mood and satisfaction level.",
+  "post_call_analysis_data": [
+    {
+      "type": "string",
+      "name": "patient-info",
+      "description": "The full name of the caller \nwho wants to book an appointment"
+    },
+    {
+      "type": "string",
+      "name": "doctor-chosen",
+      "description": "The doctor the caller selected \n(Dr. Umaima, Dr. Farooq, Dr. Azam, or Dr. Maliha)"
+    },
+    {
+      "type": "string",
+      "name": "appointment-date",
+      "description": " The date the caller wants to book the appointment"
+    },
+    {
+      "type": "string",
+      "name": "appointment-time",
+      "description": " The time slot the caller preferred for the appointment"
+    },
+    {
+      "type": "string",
+      "name": "caller-phone-number",
+      "description": "The contact number provided \nby the caller for confirmation"
+    },
+    {
+      "type": "system-presets",
+      "name": "call_summary",
+      "description": "Write a 1-3 sentence summary of the call based on the call transcript. Should capture the important information and actions taken during the call."
+    },
+    {
+      "type": "system-presets",
+      "name": "call_successful",
+      "description": "Evaluate whether the agent had a successful call with the user. For a successful call, the agent should have a complete conversation with user, finished the task, and have not ran into technical issues, or caused user frustration. Besides, the agent was not blocked by a call screen or encountered voicemail."
+    },
+    {
+      "type": "system-presets",
+      "name": "user_sentiment",
+      "description": "Evaluate user's sentiment, mood and satisfaction level."
+    }
+  ],
+  "voice_id": "retell-Della",
+  "max_call_duration_ms": 3600000,
+  "interruption_sensitivity": 0.9,
+  "enable_dynamic_responsiveness": false,
+  "normalize_for_speech": false,
+  "vocab_specialization": "medical",
+  "allow_user_dtmf": true,
+  "user_dtmf_options": {},
+  "retellLlmData": {
+    "llm_id": "llm_b9a80214514bd20eaed2e6970bfe",
+    "version": 1,
+    "model": "gpt-4.1",
+    "tool_call_strict_mode": true,
+    "general_prompt": "You are Sara, a booking assistant for PsycheCare \nClinic, Karachi. Book psychiatry appointments.\nDOCTORS & AVAILABILITY:\n- Dr. Umaima: Mon, Wed, Fri\n- Dr. Farooq: Tue, Thu, Sat\n- Dr. Azam: Mon, Tue, Wed\n- Dr. Maliha: Thu, Fri, Sat\nHOURS: Mon-Sat, 10AM-7PM\nSTEPS:\n1. Greet & introduce yourself\n2. Get caller's full name\n3. Ask preferred doctor (suggest Dr. Umaima if unsure)\n4. Confirm doctor's available days, get preferred date\n5. Get preferred time (10AM-7PM)\n6. Get contact number\n7. Repeat: Name, Doctor, Date, Time, Phone\n8. Confirm & end warmly\nRULES:\n- Speak English; switch to Urdu mix if caller does\n- Never ask about medical condition\n- Fees: \"Our team will confirm on arrival\"\n- Be calm, gentle, non-judgmental\n- Keep responses short",
+    "general_tools": [
+      {
+        "name": "end_call",
+        "description": "End the call when user has to leave (like says bye) or you are instructed to do so.",
+        "type": "end_call",
+        "speak_after_execution": true
+      }
+    ],
+    "start_speaker": "agent",
+    "begin_message": "Hello! Thank you for calling PsycheCare Clinic.  This is Sara. How can I help you today?",
+    "knowledge_base_ids": [],
+    "kb_config": {
+      "top_k": 3,
+      "filter_score": 0.6
+    },
+    "last_modification_timestamp": 1777450230120,
+    "is_published": true
+  }
+}
